@@ -26,7 +26,9 @@ The synthetic, de-identified regression corpus and standard-library evaluator
 are in `tools/data/synthetic_priority_eval_v1.csv` and
 `tools/evaluate_priority_baseline.py`. The measured result and its limitations
 are documented in [PHASE3_BASELINE_EVALUATION.md](PHASE3_BASELINE_EVALUATION.md).
-This seed corpus is intentionally not evidence of field accuracy.
+This seed corpus is intentionally not evidence of field accuracy. The current
+classifier and corpus are **English only**; non-English classification is out
+of scope for the current SRS.
 
 ## TFLite gate
 

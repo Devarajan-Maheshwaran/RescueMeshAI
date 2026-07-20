@@ -258,7 +258,6 @@ These requirements are **gated** and shall not enter the default production flow
 | FR-AI-06 | Should | The system shall support a quantised TensorFlow Lite model only after model provenance, licence, test vectors, evaluation metrics, and model version are documented. |
 | FR-AI-07 | Should | Training/evaluation material shall be de-identified, lawfully sourced, documented, and excluded from the production app unless essential. |
 | FR-AI-08 | Should | The project shall report per-class precision, recall, F1/confusion matrix, model size, inference latency, and known language/domain limits. |
-| FR-AI-09 | Could | The system may add validated Tamil-language support; it shall not claim language support without an appropriate evaluated corpus. |
 
 ### 4.9 Intelligent relay-policy requirements
 

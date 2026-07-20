@@ -6,7 +6,7 @@ This is a reproducible **sanity evaluation**, not a claim of real-world model
 accuracy. The corpus at `tools/data/synthetic_priority_eval_v1.csv` contains 24
 English synthetic examples created only for initial regression coverage. It is
 not FEMA data, contains no personal data, and must not be used to claim
-clinical, disaster-response, multilingual, or field performance.
+clinical, disaster-response, non-English-language, or field performance.
 
 ## Reproduce
 
@@ -37,7 +37,8 @@ real-world generalisation.
 3. Non-keyword phrasing, spelling variation, negation, ambiguity, and false
    alarm cases.
 4. Separate train/validation/test partitions for any learned model.
-5. Tamil evaluation material before Tamil support is claimed.
+5. English-only scope retained unless the SRS is deliberately revised with a
+   separately validated language plan.
 6. Comparison against this rule baseline on precision, recall, F1, latency,
    model size, memory and battery use.
 
