@@ -57,6 +57,17 @@ public class EmergencyForumRepository {
 		});
 	}
 
+	/** Returns true only for the locally configured RescueMesh pilot forum. */
+	public boolean isConfiguredForum(GroupId groupId) {
+		String value = preferences.getString(KEY_GROUP_ID, null);
+		if (value == null) return false;
+		try {
+			return new GroupId(Base64.decode(value, Base64.NO_WRAP)).equals(groupId);
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
+	}
+
 	@Nullable
 	private Forum getStoredForum() throws DbException {
 		String value = preferences.getString(KEY_GROUP_ID, null);

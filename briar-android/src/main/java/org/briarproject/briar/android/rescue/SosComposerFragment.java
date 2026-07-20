@@ -1,12 +1,15 @@
 package org.briarproject.briar.android.rescue;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.briarproject.briar.R;
@@ -15,6 +18,8 @@ import org.briarproject.briar.android.fragment.BaseFragment;
 import org.briarproject.briar.android.rescue.transport.EmergencySubmissionController;
 import org.rescuemesh.api.emergency.EmergencyKind;
 import org.rescuemesh.api.emergency.EmergencyPriority;
+import org.rescuemesh.api.emergency.PrioritySuggestion;
+import org.rescuemesh.core.emergency.RuleBasedPriorityClassifier;
 
 import javax.annotation.Nullable;
 
@@ -69,9 +74,26 @@ public class SosComposerFragment extends BaseFragment {
 		RadioGroup priority = view.findViewById(R.id.rescue_priority_group);
 		priority.check(isSos ? R.id.rescue_priority_critical
 				: R.id.rescue_priority_normal);
+		EditText message = view.findViewById(R.id.rescue_message);
+		message.addTextChangedListener(new TextWatcher() {
+			@Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+			@Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+				renderSuggestion(view, s.toString());
+			}
+			@Override public void afterTextChanged(Editable s) {}
+		});
 
 		view.findViewById(R.id.rescue_store_sos_button).setOnClickListener(v ->
 				storeDraft(view));
+	}
+
+	private void renderSuggestion(View view, String text) {
+		PrioritySuggestion suggestion = new RuleBasedPriorityClassifier().classify(text);
+		TextView label = view.findViewById(R.id.rescue_priority_suggestion);
+		String indicators = suggestion.getIndicators().isEmpty() ?
+				getString(R.string.rescue_no_indicators) : suggestion.getIndicators().toString();
+		label.setText(getString(R.string.rescue_priority_suggestion_format,
+				suggestion.getPriority().name(), indicators));
 	}
 
 	private void storeDraft(View view) {

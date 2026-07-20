@@ -52,6 +52,9 @@ public class RescueDashboardFragment extends BaseFragment {
 	public void onViewCreated(@NonNull View view,
 			@Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		BriarApplication application = (BriarApplication) requireActivity()
+				.getApplication();
+		EmergencyRuntime.start(requireContext(), application.getApplicationComponent());
 		requireActivity().setTitle(R.string.rescue_dashboard_title);
 		view.findViewById(R.id.rescue_sos_button).setOnClickListener(v ->
 				showNextFragment(SosComposerFragment.newCriticalSos()));
@@ -61,6 +64,8 @@ public class RescueDashboardFragment extends BaseFragment {
 				showNextFragment(RoleSelectionFragment.newInstance()));
 		view.findViewById(R.id.rescue_provision_forum_button).setOnClickListener(v ->
 				provisionEmergencyForum());
+		view.findViewById(R.id.rescue_open_feed_button).setOnClickListener(v ->
+				showNextFragment(EmergencyFeedFragment.newInstance()));
 		renderLatestDraft(view);
 		renderRole(view);
 		renderRadioStatus(view);

@@ -48,6 +48,14 @@
                 android:text="@string/rescue_priority_normal" />
         </RadioGroup>
 
+        <TextView
+            android:id="@+id/rescue_priority_suggestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/rescue_priority_suggestion_initial"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
         <EditText
             android:id="@+id/rescue_message"
             android:layout_width="match_parent"

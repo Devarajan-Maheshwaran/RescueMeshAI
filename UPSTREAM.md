@@ -32,6 +32,12 @@ The repository remote named `briar-upstream` is used only to fetch upstream chan
 - Added an authorised Briar-forum bridge: canonical envelopes are prefixed/hex forum-post text, published through existing Briar forum storage, and safely decoded on receipt.
 - The bridge is not public-mesh capable and does not yet authenticate non-contact senders.
 
+### Phase 3 — offline priority baseline (in progress)
+
+- Added an explainable English rule-based priority classifier and UI suggestion.
+- The classifier runs fully on-device, records matching indicators, and never changes sender-selected priority.
+- Added `docs/AI_PRIORITY_BASELINE.md`, including the evidence gate for a future TFLite model.
+
 ## Update policy
 
 1. Fetch upstream into `briar-upstream/master` before updating.

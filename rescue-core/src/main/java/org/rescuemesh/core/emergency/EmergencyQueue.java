@@ -59,6 +59,14 @@ public class EmergencyQueue {
 		return Collections.unmodifiableList(eligible);
 	}
 
+	/** Returns all locally known items in priority-then-age order for the UI. */
+	public synchronized List<EmergencyQueueItem> getSnapshot(long now) {
+		expireDueItems(now);
+		List<EmergencyQueueItem> snapshot = new ArrayList<>(items.values());
+		Collections.sort(snapshot, new PriorityThenAgeComparator());
+		return Collections.unmodifiableList(snapshot);
+	}
+
 	public synchronized boolean markQueued(String messageId, long now) {
 		EmergencyQueueItem item = items.get(messageId);
 		if (item == null || isFinal(item.getState())) return false;
