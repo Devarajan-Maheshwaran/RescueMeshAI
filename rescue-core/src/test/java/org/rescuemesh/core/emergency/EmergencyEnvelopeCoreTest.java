@@ -39,6 +39,25 @@ public class EmergencyEnvelopeCoreTest {
 	}
 
 	@Test
+	public void queueOrdersCriticalMessagesAndOnlyMarksActualPeerSync() {
+		EmergencyQueue queue = new EmergencyQueue(10);
+		EmergencyEnvelope normal = EmergencyEnvelopeFactory.create("origin-a",
+				EmergencyKind.STATUS, EmergencyPriority.NORMAL, "Safe", null, null,
+				NOW, NOW + 60_000L, 3);
+		EmergencyEnvelope critical = EmergencyEnvelopeFactory.create("origin-b",
+				EmergencyKind.SOS, EmergencyPriority.CRITICAL, "Trapped", null, null,
+				NOW + 1, NOW + 60_000L, 3);
+		assertTrue(queue.admit(normal, NOW, true).isAccepted());
+		assertTrue(queue.admit(critical, NOW + 1, true).isAccepted());
+		assertEquals(critical.getMessageId(),
+				queue.getEligibleForTransfer(NOW + 1).get(0).getEnvelope().getMessageId());
+		assertTrue(queue.markSynchronisedToPeer(critical.getMessageId(), NOW + 2));
+		assertEquals(1, queue.getEligibleForTransfer(NOW + 2).get(0)
+				.getSynchronisedPeerCount());
+		assertTrue(queue.admit(critical, NOW + 2, false).isDuplicate());
+	}
+
+	@Test
 	public void boundedDeduplicatorEvictsOldestEntry() {
 		BoundedEmergencyDeduplicator dedup = new BoundedEmergencyDeduplicator(2);
 		dedup.record("a", NOW);

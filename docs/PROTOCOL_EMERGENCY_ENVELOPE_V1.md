@@ -29,6 +29,14 @@ not yet an emergency-service integration.
 | hopCount / hopLimit | Relay bounds. |
 | contentHash | Integrity identity for canonical content. |
 
+## Local lifecycle
+
+A validated envelope is tracked locally as `STORED`, `QUEUED`,
+`SYNCHRONISED_TO_PEER`, `ACKNOWLEDGED`, `EXPIRED`, or `REJECTED`.
+`SYNCHRONISED_TO_PEER` is set only after a future Briar adapter reports a
+successful authorised peer synchronisation. Neither that state nor an ACK means
+that an emergency service has been alerted.
+
 ## Security status
 
 The content hash detects accidental/tampered changes after reception but does
