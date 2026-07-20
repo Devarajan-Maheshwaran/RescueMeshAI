@@ -20,6 +20,11 @@
     <string name="rescue_open_feed_button">View emergency feed</string>
     <string name="rescue_feed_title">Emergency feed</string>
     <string name="rescue_feed_empty">No validated RescueMesh emergency messages are available in this app session.</string>
+    <string name="rescue_acknowledge_button">Acknowledge highest-priority SOS</string>
+    <string name="rescue_ack_role_required">Choose Rescuer or Coordinator role before acknowledging a message.</string>
+    <string name="rescue_no_ack_target">No unacknowledged SOS or update is available.</string>
+    <string name="rescue_ack_queued">Acknowledgement stored locally and queued for trusted Briar synchronisation.</string>
+    <string name="rescue_ack_failed">Acknowledgement could not be queued. Check that the Briar account is unlocked.</string>
     <string name="rescue_forum_created">Emergency pilot forum created locally. Share it with trusted participants using Briar’s forum-sharing workflow.</string>
     <string name="rescue_forum_ready">Trusted emergency forum is ready on this device.</string>
     <string name="rescue_forum_failed">Emergency forum could not be prepared. Check that the Briar account is unlocked.</string>
