@@ -1,5 +1,6 @@
 package org.briarproject.briar.android.rescue;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -15,8 +17,10 @@ import android.widget.Toast;
 import org.briarproject.briar.R;
 import org.briarproject.briar.android.BriarApplication;
 import org.briarproject.briar.android.fragment.BaseFragment;
+import org.briarproject.briar.android.rescue.location.OneTimeLocationCapture;
 import org.briarproject.briar.android.rescue.transport.EmergencySubmissionController;
 import org.rescuemesh.api.emergency.EmergencyKind;
+import org.rescuemesh.api.emergency.EmergencyLocation;
 import org.rescuemesh.api.emergency.EmergencyPriority;
 import org.rescuemesh.api.emergency.PrioritySuggestion;
 import org.rescuemesh.core.emergency.RuleBasedPriorityClassifier;
@@ -33,6 +37,10 @@ public class SosComposerFragment extends BaseFragment {
 	private static final String ARG_IS_SOS = "isSos";
 	private static final int MAX_MESSAGE_LENGTH = 500;
 	private static final int MAX_VICTIM_COUNT = 999;
+	private static final int REQUEST_LOCATION = 708;
+
+	@Nullable
+	private EmergencyLocation capturedLocation;
 
 	public static SosComposerFragment newCriticalSos() {
 		SosComposerFragment fragment = new SosComposerFragment();
@@ -82,9 +90,59 @@ public class SosComposerFragment extends BaseFragment {
 			}
 			@Override public void afterTextChanged(Editable s) {}
 		});
+		CheckBox location = view.findViewById(R.id.rescue_share_location);
+		location.setEnabled(true);
+		location.setOnCheckedChangeListener((button, checked) -> {
+			if (checked) requestLocationPermissionIfNeeded();
+			else capturedLocation = null;
+		});
 
 		view.findViewById(R.id.rescue_store_sos_button).setOnClickListener(v ->
 				storeDraft(view));
+	}
+
+	private void requestLocationPermissionIfNeeded() {
+		OneTimeLocationCapture capture = new OneTimeLocationCapture(requireContext());
+		if (capture.hasLocationPermission()) {
+			captureLocation(capture);
+			return;
+		}
+		requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION,
+				Manifest.permission.ACCESS_COARSE_LOCATION }, REQUEST_LOCATION);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions,
+			int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode != REQUEST_LOCATION) return;
+		OneTimeLocationCapture capture = new OneTimeLocationCapture(requireContext());
+		if (capture.hasLocationPermission()) {
+			captureLocation(capture);
+		} else {
+			View view = getView();
+			if (view != null) ((CheckBox) view.findViewById(R.id.rescue_share_location))
+					.setChecked(false);
+			Toast.makeText(requireContext(), R.string.rescue_location_permission_denied,
+					Toast.LENGTH_LONG).show();
+		}
+	}
+
+	private void captureLocation(OneTimeLocationCapture capture) {
+		capture.capture(new OneTimeLocationCapture.Callback() {
+			@Override
+			public void onLocation(EmergencyLocation location) {
+				capturedLocation = location;
+				runOnUiThreadUnlessDestroyed(() -> Toast.makeText(requireContext(),
+						R.string.rescue_location_captured, Toast.LENGTH_SHORT).show());
+			}
+			@Override
+			public void onFailure() {
+				capturedLocation = null;
+				runOnUiThreadUnlessDestroyed(() -> Toast.makeText(requireContext(),
+						R.string.rescue_location_unavailable, Toast.LENGTH_LONG).show());
+			}
+		});
 	}
 
 	private void renderSuggestion(View view, String text) {
@@ -116,8 +174,6 @@ public class SosComposerFragment extends BaseFragment {
 
 		RadioGroup priorityGroup = view.findViewById(R.id.rescue_priority_group);
 		EmergencyPriority priority = priorityFor(priorityGroup.getCheckedRadioButtonId());
-		// Location capture is wired separately. The user's checkbox is never
-		// treated as a coordinate until permission and a fresh location exist.
 		EmergencyKind kind = requireArguments().getBoolean(ARG_IS_SOS, true)
 				? EmergencyKind.SOS : EmergencyKind.UPDATE;
 		view.findViewById(R.id.rescue_store_sos_button).setEnabled(false);
@@ -129,7 +185,7 @@ public class SosComposerFragment extends BaseFragment {
 				application.getApplicationComponent().identityManager(),
 				application.getApplicationComponent().forumManager(),
 				application.getApplicationComponent().clock(), EmergencyRuntime.getQueue());
-		controller.submit(kind, priority, message, victimCount, null,
+		controller.submit(kind, priority, message, victimCount, capturedLocation,
 				new EmergencySubmissionController.SubmissionCallback() {
 				@Override
 				public void onStored(org.rescuemesh.api.emergency.EmergencyEnvelope envelope,

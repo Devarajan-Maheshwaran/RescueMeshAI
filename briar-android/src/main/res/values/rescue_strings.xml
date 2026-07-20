@@ -25,7 +25,9 @@
     <string name="rescue_no_ack_target">No unacknowledged SOS or update is available.</string>
     <string name="rescue_ack_queued">Acknowledgement stored locally and queued for trusted Briar synchronisation.</string>
     <string name="rescue_ack_failed">Acknowledgement could not be queued. Check that the Briar account is unlocked.</string>
-    <string name="rescue_item_metadata_format">Received: %1$s · Victims: %2$s · Peer syncs: %3$d</string>
+    <string name="rescue_item_metadata_format">Received: %1$s · Victims: %2$s · Peer syncs: %3$d · %4$s</string>
+    <string name="rescue_location_attached">Location attached</string>
+    <string name="rescue_location_not_attached">No location attached</string>
     <string name="rescue_forum_created">Emergency pilot forum created locally. Share it with trusted participants using Briar’s forum-sharing workflow.</string>
     <string name="rescue_forum_ready">Trusted emergency forum is ready on this device.</string>
     <string name="rescue_forum_failed">Emergency forum could not be prepared. Check that the Briar account is unlocked.</string>
@@ -49,7 +51,10 @@
     <string name="rescue_no_indicators">none detected</string>
     <string name="rescue_message_hint">Describe the emergency, nearby landmark, and immediate need</string>
     <string name="rescue_victim_count_hint">Number of people needing help (optional)</string>
-    <string name="rescue_share_location_label">Location sharing will be enabled after permissioned capture is implemented</string>
+    <string name="rescue_share_location_label">Attach one-time current location (optional)</string>
+    <string name="rescue_location_captured">Current location attached to this emergency message.</string>
+    <string name="rescue_location_permission_denied">Location was not shared. You can still send the emergency message.</string>
+    <string name="rescue_location_unavailable">Current location is unavailable. You can still send the emergency message.</string>
     <string name="rescue_location_phase_one_note">Location permission and capture will be connected before transmission is enabled. An SOS must remain usable without location.</string>
     <string name="rescue_store_sos_button">Queue encrypted emergency message</string>
     <string name="rescue_message_queued">Emergency message stored locally and queued for authorised Briar synchronisation. Delivery is not yet confirmed.</string>

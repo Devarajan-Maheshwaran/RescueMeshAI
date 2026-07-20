@@ -59,7 +59,10 @@ public class EmergencyFeedAdapter
 		holder.metadata.setText(holder.itemView.getContext().getString(
 				R.string.rescue_item_metadata_format, time,
 				count == null ? "—" : String.valueOf(count),
-				item.getSynchronisedPeerCount()));
+				item.getSynchronisedPeerCount(),
+				item.getEnvelope().getLocation() == null
+						? holder.itemView.getContext().getString(R.string.rescue_location_not_attached)
+						: holder.itemView.getContext().getString(R.string.rescue_location_attached)));
 		boolean acknowledgeable = (item.getEnvelope().getKind() == EmergencyKind.SOS
 					|| item.getEnvelope().getKind() == EmergencyKind.UPDATE)
 				&& item.getState() != EmergencyDeliveryState.ACKNOWLEDGED
