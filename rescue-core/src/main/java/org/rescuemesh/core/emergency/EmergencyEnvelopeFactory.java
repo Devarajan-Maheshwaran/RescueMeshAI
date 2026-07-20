@@ -21,18 +21,40 @@ public final class EmergencyEnvelopeFactory {
 			int hopLimit) {
 		EmergencyEnvelope unsigned = new EmergencyEnvelope(
 				EmergencyEnvelope.SCHEMA_VERSION_1, UUID.randomUUID().toString(),
-				originId, now, expiresAt, kind, priority, text, victimCount, location,
-				0, hopLimit, new byte[EmergencyEnvelopeCodec.HASH_BYTES]);
+				originId, now, expiresAt, kind, priority, text, null, victimCount,
+				location, 0, hopLimit, new byte[EmergencyEnvelopeCodec.HASH_BYTES]);
 		try {
 			byte[] hash = EmergencyEnvelopeCodec.sha256(
 					EmergencyEnvelopeCodec.encodeContent(unsigned));
 			return new EmergencyEnvelope(unsigned.getSchemaVersion(),
 					unsigned.getMessageId(), unsigned.getOriginId(), unsigned.getCreatedAt(),
 					unsigned.getExpiresAt(), unsigned.getKind(), unsigned.getPriority(),
-					unsigned.getText(), unsigned.getVictimCount(), unsigned.getLocation(),
+					unsigned.getText(), unsigned.getRelatedMessageId(),
+					unsigned.getVictimCount(), unsigned.getLocation(),
 					unsigned.getHopCount(), unsigned.getHopLimit(), hash);
 		} catch (IOException e) {
 			throw new IllegalArgumentException("Invalid envelope content", e);
+		}
+	}
+
+	/** Creates a bounded acknowledgement linked to a specific SOS/update ID. */
+	public static EmergencyEnvelope createAcknowledgement(String originId,
+			String relatedMessageId, long now, long expiresAt) {
+		EmergencyEnvelope unsigned = new EmergencyEnvelope(
+				EmergencyEnvelope.SCHEMA_VERSION_1, UUID.randomUUID().toString(),
+				originId, now, expiresAt, EmergencyKind.ACK,
+				EmergencyPriority.NORMAL, "Acknowledged", relatedMessageId, null,
+				null, 0, 3, new byte[EmergencyEnvelopeCodec.HASH_BYTES]);
+		try {
+			byte[] hash = EmergencyEnvelopeCodec.sha256(
+					EmergencyEnvelopeCodec.encodeContent(unsigned));
+			return new EmergencyEnvelope(unsigned.getSchemaVersion(),
+					unsigned.getMessageId(), unsigned.getOriginId(), unsigned.getCreatedAt(),
+					unsigned.getExpiresAt(), unsigned.getKind(), unsigned.getPriority(),
+					unsigned.getText(), unsigned.getRelatedMessageId(), null, null,
+					unsigned.getHopCount(), unsigned.getHopLimit(), hash);
+		} catch (IOException e) {
+			throw new IllegalArgumentException("Invalid acknowledgement", e);
 		}
 	}
 }

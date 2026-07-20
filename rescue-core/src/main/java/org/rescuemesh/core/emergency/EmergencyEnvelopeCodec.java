@@ -60,6 +60,8 @@ public final class EmergencyEnvelopeCodec {
 		EmergencyPriority priority = enumByName(EmergencyPriority.class,
 				readString(in, 16));
 		String text = readString(in, MAX_TEXT_BYTES);
+		String relatedMessageId = in.readBoolean()
+				? readString(in, MAX_IDENTIFIER_BYTES) : null;
 		Integer victimCount = in.readBoolean() ? in.readInt() : null;
 		EmergencyLocation location = null;
 		if (in.readBoolean()) {
@@ -72,8 +74,8 @@ public final class EmergencyEnvelopeCodec {
 		in.readFully(hash);
 		if (in.available() != 0) throw new IOException("Trailing envelope data");
 		return new EmergencyEnvelope(schema, messageId, originId, createdAt,
-				expiresAt, kind, priority, text, victimCount, location, hopCount,
-				hopLimit, hash);
+				expiresAt, kind, priority, text, relatedMessageId, victimCount, location,
+				hopCount, hopLimit, hash);
 	}
 
 	public static byte[] sha256(byte[] content) {
@@ -94,6 +96,11 @@ public final class EmergencyEnvelopeCodec {
 		writeString(out, e.getKind().name(), 16);
 		writeString(out, e.getPriority().name(), 16);
 		writeString(out, e.getText(), MAX_TEXT_BYTES);
+		String relatedMessageId = e.getRelatedMessageId();
+		out.writeBoolean(relatedMessageId != null);
+		if (relatedMessageId != null) {
+			writeString(out, relatedMessageId, MAX_IDENTIFIER_BYTES);
+		}
 		Integer victimCount = e.getVictimCount();
 		out.writeBoolean(victimCount != null);
 		if (victimCount != null) out.writeInt(victimCount);

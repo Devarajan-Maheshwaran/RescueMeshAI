@@ -31,6 +31,11 @@ public final class EmergencyEnvelopeValidator {
 				|| envelope.getHopCount() < 0 || envelope.getHopCount() > envelope.getHopLimit()) {
 			return ValidationResult.invalid("Invalid hop bounds");
 		}
+		if (envelope.getKind() == org.rescuemesh.api.emergency.EmergencyKind.ACK
+				&& (envelope.getRelatedMessageId() == null
+				|| envelope.getRelatedMessageId().length() == 0)) {
+			return ValidationResult.invalid("Acknowledgement has no related message ID");
+		}
 		if (envelope.getVictimCount() != null && (envelope.getVictimCount() < 0
 				|| envelope.getVictimCount() > MAX_VICTIM_COUNT)) {
 			return ValidationResult.invalid("Invalid victim count");

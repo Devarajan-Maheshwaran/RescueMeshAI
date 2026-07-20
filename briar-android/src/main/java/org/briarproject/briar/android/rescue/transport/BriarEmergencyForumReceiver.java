@@ -26,7 +26,12 @@ public class BriarEmergencyForumReceiver {
 		try {
 			EmergencyEnvelope envelope = EmergencyForumPayloadCodec.decode(forumText);
 			EmergencyQueue.AdmissionResult admission = queue.admit(envelope, now, false);
-			if (admission.isAccepted()) return ReceiveResult.accepted(envelope);
+			if (admission.isAccepted()) {
+				if (envelope.getKind() == org.rescuemesh.api.emergency.EmergencyKind.ACK) {
+					queue.markAcknowledged(envelope.getRelatedMessageId(), now);
+				}
+				return ReceiveResult.accepted(envelope);
+			}
 			if (admission.isDuplicate()) return ReceiveResult.duplicate();
 			return ReceiveResult.rejected(admission.getRejectionState(),
 					admission.getReason());

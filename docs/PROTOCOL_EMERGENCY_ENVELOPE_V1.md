@@ -25,6 +25,7 @@ not yet an emergency-service integration.
 | originId | Pseudonymous origin identifier; not a verified real-world identity. |
 | createdAt / expiresAt | Time-bound retention and forwarding eligibility. |
 | kind / priority | SOS workflow type and sender-selected urgency. |
+| relatedMessageId | Required for `ACK`; links acknowledgement to the SOS/update it confirms. |
 | text / victimCount / location | Bounded, optional emergency content. Location is consent based. |
 | hopCount / hopLimit | Relay bounds. |
 | contentHash | Integrity identity for canonical content. |
@@ -45,8 +46,9 @@ current adapter does not infer remote delivery from local persistence.
 A validated envelope is tracked locally as `STORED`, `QUEUED`,
 `SYNCHRONISED_TO_PEER`, `ACKNOWLEDGED`, `EXPIRED`, or `REJECTED`.
 `SYNCHRONISED_TO_PEER` is set only after a future Briar adapter reports a
-successful authorised peer synchronisation. Neither that state nor an ACK means
-that an emergency service has been alerted.
+successful authorised peer synchronisation. A valid incoming `ACK` changes the
+linked local item to `ACKNOWLEDGED`. Neither that state nor an ACK means that an
+emergency service has been alerted.
 
 ## Security status
 

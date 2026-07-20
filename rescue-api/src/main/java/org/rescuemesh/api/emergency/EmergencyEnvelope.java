@@ -25,6 +25,8 @@ public final class EmergencyEnvelope {
 	private final EmergencyPriority priority;
 	private final String text;
 	@Nullable
+	private final String relatedMessageId;
+	@Nullable
 	private final Integer victimCount;
 	@Nullable
 	private final EmergencyLocation location;
@@ -34,8 +36,9 @@ public final class EmergencyEnvelope {
 
 	public EmergencyEnvelope(int schemaVersion, String messageId, String originId,
 			long createdAt, long expiresAt, EmergencyKind kind,
-			EmergencyPriority priority, String text, @Nullable Integer victimCount,
-			@Nullable EmergencyLocation location, int hopCount, int hopLimit,
+			EmergencyPriority priority, String text, @Nullable String relatedMessageId,
+			@Nullable Integer victimCount, @Nullable EmergencyLocation location,
+			int hopCount, int hopLimit,
 			byte[] contentHash) {
 		this.schemaVersion = schemaVersion;
 		this.messageId = requireNonEmpty(messageId, "messageId");
@@ -46,6 +49,7 @@ public final class EmergencyEnvelope {
 		this.kind = kind;
 		this.priority = priority;
 		this.text = text == null ? "" : text;
+		this.relatedMessageId = relatedMessageId;
 		this.victimCount = victimCount;
 		this.location = location;
 		this.hopCount = hopCount;
@@ -69,6 +73,7 @@ public final class EmergencyEnvelope {
 	public EmergencyKind getKind() { return kind; }
 	public EmergencyPriority getPriority() { return priority; }
 	public String getText() { return text; }
+	@Nullable public String getRelatedMessageId() { return relatedMessageId; }
 	@Nullable public Integer getVictimCount() { return victimCount; }
 	@Nullable public EmergencyLocation getLocation() { return location; }
 	public int getHopCount() { return hopCount; }

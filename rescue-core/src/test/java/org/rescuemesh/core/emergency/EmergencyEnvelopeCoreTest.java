@@ -34,8 +34,19 @@ public class EmergencyEnvelopeCoreTest {
 		EmergencyEnvelope altered = new EmergencyEnvelope(created.getSchemaVersion(),
 				created.getMessageId(), created.getOriginId(), created.getCreatedAt(),
 				created.getExpiresAt(), created.getKind(), created.getPriority(),
-				"Different text", null, null, 0, 3, created.getContentHash());
+				"Different text", null, null, null, 0, 3, created.getContentHash());
 		assertFalse(EmergencyEnvelopeValidator.validate(altered, NOW).isValid());
+	}
+
+	@Test
+	public void acknowledgementHasLinkedMessageIdAndValidHash() throws Exception {
+		EmergencyEnvelope acknowledgement = EmergencyEnvelopeFactory.createAcknowledgement(
+				"origin-a", "sos-message-id", NOW, NOW + 60_000L);
+		assertEquals(EmergencyKind.ACK, acknowledgement.getKind());
+		assertEquals("sos-message-id", acknowledgement.getRelatedMessageId());
+		assertTrue(EmergencyEnvelopeValidator.validate(acknowledgement, NOW).isValid());
+		assertEquals("sos-message-id", EmergencyEnvelopeCodec.decode(
+				EmergencyEnvelopeCodec.encode(acknowledgement)).getRelatedMessageId());
 	}
 
 	@Test
