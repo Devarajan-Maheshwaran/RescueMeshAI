@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="rescue_critical">#B3261E</color>
+    <color name="rescue_status_background">#FFF8F7</color>
+    <color name="rescue_status_border">#B3261E</color>
+</resources>

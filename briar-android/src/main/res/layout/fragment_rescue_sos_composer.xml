@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rescue_sos_disclaimer"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/rescue_priority_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        <RadioGroup
+            android:id="@+id/rescue_priority_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rescue_priority_critical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rescue_priority_critical" />
+
+            <RadioButton
+                android:id="@+id/rescue_priority_high"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rescue_priority_high" />
+
+            <RadioButton
+                android:id="@+id/rescue_priority_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rescue_priority_normal" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/rescue_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="top|start"
+            android:hint="@string/rescue_message_hint"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLength="500"
+            android:minHeight="120dp" />
+
+        <EditText
+            android:id="@+id/rescue_victim_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="@string/rescue_victim_count_hint"
+            android:inputType="number" />
+
+        <CheckBox
+            android:id="@+id/rescue_share_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/rescue_share_location_label" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/rescue_location_phase_one_note"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/rescue_store_sos_button"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/rescue_critical"
+            android:text="@string/rescue_store_sos_button"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</ScrollView>
