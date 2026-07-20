@@ -81,6 +81,17 @@ public class EmergencyEnvelopeCoreTest {
 	}
 
 	@Test
+	public void queueExpiresMessagesAndPreventsFurtherTransfer() {
+		EmergencyQueue queue = new EmergencyQueue(10);
+		EmergencyEnvelope envelope = EmergencyEnvelopeFactory.create("origin-a",
+				EmergencyKind.SOS, EmergencyPriority.HIGH, "Need help", null, null,
+				NOW, NOW + 10L, 3);
+		assertTrue(queue.admit(envelope, NOW, true).isAccepted());
+		assertEquals(1, queue.expireDueItems(NOW + 10L));
+		assertTrue(queue.getEligibleForTransfer(NOW + 10L).isEmpty());
+	}
+
+	@Test
 	public void boundedDeduplicatorEvictsOldestEntry() {
 		BoundedEmergencyDeduplicator dedup = new BoundedEmergencyDeduplicator(2);
 		dedup.record("a", NOW);

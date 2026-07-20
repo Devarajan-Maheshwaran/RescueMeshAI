@@ -8,7 +8,7 @@ RescueMesh AI is an academic open-source project for exchanging prioritised emer
 
 ## Project status
 
-**Stage:** Planning and architecture baseline  
+**Stage:** Phase 2 trusted-pilot code complete; physical Android device validation pending
 **Initial upstream baseline:** Briar `master`, commit `b46d008aceb4c9cea306df8299fcfc1b7ce79d21` (Briar 1.5.19)  
 **Platform:** Android-first  
 **Licence:** GPL-3.0-or-later — see [LICENSE.txt](LICENSE.txt) when the upstream source is imported.
