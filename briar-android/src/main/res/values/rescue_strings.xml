@@ -16,6 +16,10 @@
     <string name="rescue_sos_button">SOS — REQUEST HELP</string>
     <string name="rescue_sos_button_description">Create a critical emergency SOS</string>
     <string name="rescue_create_update_button">Create status update</string>
+    <string name="rescue_provision_forum_button">Prepare trusted emergency forum</string>
+    <string name="rescue_forum_created">Emergency pilot forum created locally. Share it with trusted participants using Briar’s forum-sharing workflow.</string>
+    <string name="rescue_forum_ready">Trusted emergency forum is ready on this device.</string>
+    <string name="rescue_forum_failed">Emergency forum could not be prepared. Check that the Briar account is unlocked.</string>
     <string name="rescue_offline_status_title">Connection status</string>
     <string name="rescue_offline_status_body">Nearby peer discovery and verified delivery status will appear here. A saved message is not proof that emergency services have been notified.</string>
     <string name="rescue_radio_on">on</string>
@@ -23,7 +27,7 @@
     <string name="rescue_radio_status_format">Bluetooth: %1$s · Wi-Fi: %2$s. This only reports local radio readiness; it does not show nearby peers.</string>
     <string name="rescue_latest_status_title">Latest local emergency draft</string>
     <string name="rescue_no_local_sos">No local SOS has been created on this device.</string>
-    <string name="rescue_latest_draft_format">%1$s — current-session draft: %2$s</string>
+    <string name="rescue_latest_queue_format">%1$s — %2$s: %3$s</string>
     <string name="rescue_sos_title">Create SOS</string>
     <string name="rescue_update_title">Create emergency update</string>
     <string name="rescue_sos_disclaimer">This screen stores a local emergency draft in Phase 1. It does not yet confirm transmission, relay, rescue dispatch, or delivery.</string>
@@ -33,12 +37,13 @@
     <string name="rescue_priority_normal">NORMAL — status or coordination update</string>
     <string name="rescue_message_hint">Describe the emergency, nearby landmark, and immediate need</string>
     <string name="rescue_victim_count_hint">Number of people needing help (optional)</string>
-    <string name="rescue_share_location_label">Include my current location when available</string>
+    <string name="rescue_share_location_label">Location sharing will be enabled after permissioned capture is implemented</string>
     <string name="rescue_location_phase_one_note">Location permission and capture will be connected before transmission is enabled. An SOS must remain usable without location.</string>
-    <string name="rescue_store_sos_button">Store local emergency draft</string>
+    <string name="rescue_store_sos_button">Queue encrypted emergency message</string>
+    <string name="rescue_message_queued">Emergency message stored locally and queued for authorised Briar synchronisation. Delivery is not yet confirmed.</string>
+    <string name="rescue_message_store_failed">The emergency message could not be queued. Check that the Briar account is unlocked and try again.</string>
     <string name="rescue_message_required">Enter a short emergency description.</string>
     <string name="rescue_message_too_long">Keep the message within %1$d characters.</string>
     <string name="rescue_victim_count_invalid">Enter a number from 0 to %1$d.</string>
-    <string name="rescue_draft_saved">Emergency draft saved locally. It has not been sent yet.</string>
     <string name="rescue_navigation_title">Emergency dashboard</string>
 </resources>

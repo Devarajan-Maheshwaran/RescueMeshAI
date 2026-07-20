@@ -29,7 +29,7 @@ The repository remote named `briar-upstream` is used only to fetch upstream chan
 - Added standalone `rescue-api` and `rescue-core` Gradle Java modules.
 - Added `EmergencyEnvelopeV1`, canonical binary codec, SHA-256 content hash, strict validation, bounded seen-message cache, local lifecycle queue, and regression tests.
 - Added `docs/PROTOCOL_EMERGENCY_ENVELOPE_V1.md`.
-- Added an authorised Briar-forum bridge: canonical envelopes are prefixed/Base64 forum-post text, published through existing Briar forum storage, and safely decoded on receipt.
+- Added an authorised Briar-forum bridge: canonical envelopes are prefixed/hex forum-post text, published through existing Briar forum storage, and safely decoded on receipt.
 - The bridge is not public-mesh capable and does not yet authenticate non-contact senders.
 
 ## Update policy

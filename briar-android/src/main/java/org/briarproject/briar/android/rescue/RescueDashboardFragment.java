@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.briarproject.briar.R;
+import org.briarproject.briar.android.BriarApplication;
 import org.briarproject.briar.android.fragment.BaseFragment;
-import org.briarproject.briar.android.rescue.emergency.EmergencyDraft;
-import org.briarproject.briar.android.rescue.emergency.EmergencyDraftStore;
+import org.briarproject.briar.android.rescue.transport.EmergencyForumRepository;
+import org.rescuemesh.core.emergency.EmergencyQueueItem;
 import org.briarproject.briar.android.rescue.profile.RescueRole;
 import org.briarproject.briar.android.rescue.profile.RescueRoleStore;
 import org.briarproject.briar.android.rescue.status.RescueDeviceStatus;
@@ -57,6 +59,8 @@ public class RescueDashboardFragment extends BaseFragment {
 				showNextFragment(SosComposerFragment.newUpdate()));
 		view.findViewById(R.id.rescue_choose_role_button).setOnClickListener(v ->
 				showNextFragment(RoleSelectionFragment.newInstance()));
+		view.findViewById(R.id.rescue_provision_forum_button).setOnClickListener(v ->
+				provisionEmergencyForum());
 		renderLatestDraft(view);
 		renderRole(view);
 		renderRadioStatus(view);
@@ -71,6 +75,28 @@ public class RescueDashboardFragment extends BaseFragment {
 			renderRole(view);
 			renderRadioStatus(view);
 		}
+	}
+
+	private void provisionEmergencyForum() {
+		BriarApplication application = (BriarApplication) requireActivity()
+				.getApplication();
+		EmergencyForumRepository repository = new EmergencyForumRepository(
+				requireContext(), application.getApplicationComponent().databaseExecutor(),
+				application.getApplicationComponent().forumManager());
+		repository.getOrCreate(new EmergencyForumRepository.ForumCallback() {
+			@Override
+			public void onForumReady(org.briarproject.briar.api.forum.Forum forum,
+					boolean created) {
+				runOnUiThreadUnlessDestroyed(() -> Toast.makeText(requireContext(),
+						created ? R.string.rescue_forum_created
+								: R.string.rescue_forum_ready, Toast.LENGTH_LONG).show());
+			}
+			@Override
+			public void onFailure(Exception exception) {
+				runOnUiThreadUnlessDestroyed(() -> Toast.makeText(requireContext(),
+						R.string.rescue_forum_failed, Toast.LENGTH_LONG).show());
+			}
+		});
 	}
 
 	private void renderRole(View view) {
@@ -93,13 +119,16 @@ public class RescueDashboardFragment extends BaseFragment {
 
 	private void renderLatestDraft(View view) {
 		TextView status = view.findViewById(R.id.rescue_latest_status);
-		EmergencyDraft draft = new EmergencyDraftStore(requireContext()).getLatest();
-		if (draft == null) {
+		java.util.List<EmergencyQueueItem> items = EmergencyRuntime.getQueue()
+				.getEligibleForTransfer(System.currentTimeMillis());
+		if (items.isEmpty()) {
 			status.setText(R.string.rescue_no_local_sos);
 			return;
 		}
-		String label = getString(R.string.rescue_latest_draft_format,
-				draft.getPriority().name(), draft.getMessage());
+		EmergencyQueueItem item = items.get(0);
+		String label = getString(R.string.rescue_latest_queue_format,
+				item.getEnvelope().getPriority().name(), item.getState().name(),
+				item.getEnvelope().getText());
 		status.setText(label);
 	}
 }

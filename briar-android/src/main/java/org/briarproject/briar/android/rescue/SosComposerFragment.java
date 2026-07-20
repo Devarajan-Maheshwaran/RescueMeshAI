@@ -5,25 +5,23 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import org.briarproject.briar.R;
+import org.briarproject.briar.android.BriarApplication;
 import org.briarproject.briar.android.fragment.BaseFragment;
-import org.briarproject.briar.android.rescue.emergency.EmergencyDraft;
-import org.briarproject.briar.android.rescue.emergency.EmergencyDraftStore;
+import org.briarproject.briar.android.rescue.transport.EmergencySubmissionController;
+import org.rescuemesh.api.emergency.EmergencyKind;
 import org.rescuemesh.api.emergency.EmergencyPriority;
 
 import javax.annotation.Nullable;
 
 /**
- * Collects a local Phase-1 SOS/update draft.
- *
- * <p>Saving is deliberately labelled as local storage. Network queueing,
- * authentication, location capture, encryption bindings and relay delivery
- * belong to the Phase-2 EmergencyEnvelope implementation.</p>
+ * Collects a SOS/update and queues a validated envelope through a trusted
+ * Briar emergency forum. Location capture is intentionally optional and is
+ * added only when a fresh, permissioned location can be attached safely.
  */
 public class SosComposerFragment extends BaseFragment {
 
@@ -96,13 +94,40 @@ public class SosComposerFragment extends BaseFragment {
 
 		RadioGroup priorityGroup = view.findViewById(R.id.rescue_priority_group);
 		EmergencyPriority priority = priorityFor(priorityGroup.getCheckedRadioButtonId());
-		CheckBox shareLocation = view.findViewById(R.id.rescue_share_location);
-		EmergencyDraft draft = EmergencyDraft.create(priority, message, victimCount,
-				shareLocation.isChecked());
-		new EmergencyDraftStore(requireContext()).save(draft);
-		Toast.makeText(requireContext(), R.string.rescue_draft_saved,
-				Toast.LENGTH_LONG).show();
-		requireActivity().onBackPressed();
+		// Location capture is wired separately. The user's checkbox is never
+		// treated as a coordinate until permission and a fresh location exist.
+		EmergencyKind kind = requireArguments().getBoolean(ARG_IS_SOS, true)
+				? EmergencyKind.SOS : EmergencyKind.UPDATE;
+		view.findViewById(R.id.rescue_store_sos_button).setEnabled(false);
+		BriarApplication application = (BriarApplication) requireActivity()
+				.getApplication();
+		EmergencySubmissionController controller = new EmergencySubmissionController(
+				requireContext(), application.getApplicationComponent().databaseExecutor(),
+				application.getApplicationComponent().cryptoExecutor(),
+				application.getApplicationComponent().identityManager(),
+				application.getApplicationComponent().forumManager(),
+				application.getApplicationComponent().clock(), EmergencyRuntime.getQueue());
+		controller.submit(kind, priority, message, victimCount, null,
+				new EmergencySubmissionController.SubmissionCallback() {
+				@Override
+				public void onStored(org.rescuemesh.api.emergency.EmergencyEnvelope envelope,
+						boolean forumWasCreated) {
+					runOnUiThreadUnlessDestroyed(() -> {
+						Toast.makeText(requireContext(), R.string.rescue_message_queued,
+								Toast.LENGTH_LONG).show();
+						requireActivity().onBackPressed();
+					});
+				}
+				@Override
+				public void onFailure(Exception exception) {
+					runOnUiThreadUnlessDestroyed(() -> {
+						View button = view.findViewById(R.id.rescue_store_sos_button);
+						button.setEnabled(true);
+						Toast.makeText(requireContext(), R.string.rescue_message_store_failed,
+								Toast.LENGTH_LONG).show();
+					});
+				}
+			});
 	}
 
 	@Nullable

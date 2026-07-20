@@ -31,9 +31,9 @@ not yet an emergency-service integration.
 
 ## Authorised Briar forum bridge
 
-For the closed pilot, the binary envelope is encoded as Base64 with the text
-prefix `rescuemesh:e1:` and stored in a dedicated, already authorised Briar
-forum post. The bridge deliberately uses Briar's existing encrypted forum
+For the closed pilot, the binary envelope is hex-encoded with the text prefix
+`rescuemesh:e1:` and stored in a dedicated, already authorised Briar forum
+post. Hex encoding avoids a platform Base64 dependency on Android API 21. The bridge deliberately uses Briar's existing encrypted forum
 sharing path; it does not discover strangers, bypass group membership, or
 forward ordinary Briar data.
 
