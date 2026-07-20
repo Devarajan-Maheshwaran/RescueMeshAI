@@ -34,4 +34,16 @@ public class RuleBasedPriorityClassifierTest {
 		assertEquals(EmergencyPriority.NORMAL,
 				classifier.classify("We are safe near the school").getPriority());
 	}
+
+	@Test
+	public void doesNotMatchIndicatorInsideAnotherEnglishWord() {
+		assertEquals(EmergencyPriority.NORMAL, classifier.classify(
+				"The firefighter station is safe and has supplies").getPriority());
+	}
+
+	@Test
+	public void explicitNegationDoesNotCreateCriticalIndicator() {
+		assertEquals(EmergencyPriority.NORMAL,
+				classifier.classify("There is no fire at our location").getPriority());
+	}
 }

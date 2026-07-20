@@ -7,6 +7,7 @@ exactly the same labelled examples.
 """
 import argparse
 import csv
+import re
 from collections import Counter
 
 CRITICAL = ("trapped", "unconscious", "not breathing", "severe bleeding",
@@ -16,17 +17,23 @@ HIGH = ("injured", "need help", "medical help", "flood rising", "missing",
 LABELS = ("CRITICAL", "HIGH", "NORMAL")
 
 
-def negated(text, indicator):
-    pos = text.find(indicator)
-    prefix = text[max(0, pos - 12):pos]
-    return any(marker in prefix for marker in ("no ", "not ", "without "))
+def contains_positive_indicator(text, indicator):
+    # Mirror Java word/phrase boundary behaviour: avoid matching "fire" in
+    # "firefighter" while permitting punctuation around a phrase.
+    pattern = re.compile(r"(^|[^a-z])" + re.escape(indicator) + r"(?=$|[^a-z])")
+    for match in pattern.finditer(text):
+        start = match.start() + len(match.group(1))
+        prefix = text[max(0, start - 12):start]
+        if not any(marker in prefix for marker in ("no ", "not ", "without ")):
+            return True
+    return False
 
 
 def classify(text):
     text = text.lower()
-    if any(word in text and not negated(text, word) for word in CRITICAL):
+    if any(contains_positive_indicator(text, word) for word in CRITICAL):
         return "CRITICAL"
-    if any(word in text and not negated(text, word) for word in HIGH):
+    if any(contains_positive_indicator(text, word) for word in HIGH):
         return "HIGH"
     return "NORMAL"
 

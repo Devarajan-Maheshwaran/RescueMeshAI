@@ -3,7 +3,7 @@
 ## Scope
 
 This is a reproducible **sanity evaluation**, not a claim of real-world model
-accuracy. The corpus at `tools/data/synthetic_priority_eval_v1.csv` contains 24
+accuracy. The corpus at `tools/data/synthetic_priority_eval_v1.csv` contains 26
 English synthetic examples created only for initial regression coverage. It is
 not FEMA data, contains no personal data, and must not be used to claim
 clinical, disaster-response, non-English-language, or field performance.
@@ -23,11 +23,13 @@ python3 tools/evaluate_priority_baseline.py \
 | HIGH | 1.000 | 1.000 | 1.000 |
 | NORMAL | 1.000 | 1.000 | 1.000 |
 
-Overall accuracy: **1.000** (24/24).
+Overall accuracy: **1.000** (26/26).
 
 The perfect result is expected because these are small seed examples using the
-same documented vocabulary as the baseline rules. It demonstrates that the
-implementation and evaluation script agree; it does **not** establish
+same documented vocabulary as the baseline rules. The set includes basic
+negation and word-boundary regressions (for example, `no fire` and
+`firefighter`) to keep the Java implementation and Python evaluator aligned.
+It demonstrates evaluator/classifier consistency; it does **not** establish
 real-world generalisation.
 
 ## In-app metric support

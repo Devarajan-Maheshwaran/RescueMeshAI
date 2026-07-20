@@ -23,3 +23,5 @@ id,expected_priority,text,source,notes
 22,CRITICAL,"Person not breathing after the collapse",synthetic,seed-evaluation-only
 23,HIGH,"Medical help needed for two injured people",synthetic,seed-evaluation-only
 24,NORMAL,"Supplies request for drinking water",synthetic,seed-evaluation-only
+25,NORMAL,"The firefighter station is safe and has supplies",synthetic,boundary-case
+26,NORMAL,"There is no fire at our location",synthetic,negation-case

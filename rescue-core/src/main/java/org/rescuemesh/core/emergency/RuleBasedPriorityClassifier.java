@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Transparent, offline Phase-3 baseline. It provides attention guidance, not
@@ -49,16 +51,23 @@ public class RuleBasedPriorityClassifier implements PriorityClassifier {
 	private List<String> matched(String text, List<String> indicators) {
 		List<String> matches = new ArrayList<>();
 		for (String indicator : indicators) {
-			if (text.contains(indicator) && !isNegated(text, indicator)) {
-				matches.add(indicator);
+			// Word/phrase boundaries avoid accidental matches such as "fire" in
+			// "firefighter" while retaining multi-word emergency indicators.
+			Pattern pattern = Pattern.compile("(^|[^a-z])" + Pattern.quote(indicator)
+					+ "(?=$|[^a-z])");
+			Matcher matcher = pattern.matcher(text);
+			while (matcher.find()) {
+				int indicatorStart = matcher.start() + matcher.group(1).length();
+				if (!isNegatedAt(text, indicatorStart)) {
+					matches.add(indicator);
+					break;
+				}
 			}
 		}
 		return matches;
 	}
 
-	private boolean isNegated(String text, String indicator) {
-		int index = text.indexOf(indicator);
-		if (index < 0) return false;
+	private boolean isNegatedAt(String text, int index) {
 		int start = Math.max(0, index - 12);
 		String prefix = text.substring(start, index);
 		return prefix.contains("no ") || prefix.contains("not ") || prefix.contains("without ");
