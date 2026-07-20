@@ -32,15 +32,15 @@ public class RuleBasedPriorityClassifier implements PriorityClassifier {
 		List<String> critical = matched(normalised, CRITICAL);
 		if (!critical.isEmpty()) {
 			return new PrioritySuggestion(EmergencyPriority.CRITICAL,
-					confidence(critical.size(), .80f), critical);
+					confidence(critical.size(), .80f), critical, getModelVersion());
 		}
 		List<String> high = matched(normalised, HIGH);
 		if (!high.isEmpty()) {
 			return new PrioritySuggestion(EmergencyPriority.HIGH,
-					confidence(high.size(), .65f), high);
+					confidence(high.size(), .65f), high, getModelVersion());
 		}
 		return new PrioritySuggestion(EmergencyPriority.NORMAL, .40f,
-				Collections.<String>emptyList());
+				Collections.<String>emptyList(), getModelVersion());
 	}
 
 	@Override

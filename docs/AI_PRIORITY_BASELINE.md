@@ -18,7 +18,9 @@ keywords that caused the suggestion.
 2. A suggestion is shown to support attention and review only.
 3. A classifier never silently raises or lowers the sender's selected priority.
 4. Classification is local; message text is not sent to a cloud ML service.
-5. Keyword rules are English-only at this stage and are not medical diagnosis.
+5. Each suggestion carries an auditable classifier version.
+6. Any future learned classifier must fall back to the deterministic rules classifier on inference failure.
+7. Keyword rules are English-only at this stage and are not medical diagnosis.
 
 ## Reproducible seed evaluation
 
