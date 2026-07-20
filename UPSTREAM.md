@@ -24,6 +24,13 @@ The repository remote named `briar-upstream` is used only to fetch upstream chan
 - Rebranded the default application name string to **RescueMesh AI**.
 - Added RescueMesh-specific layouts, labels, colours and status-card drawable.
 
+### Phase 2 — structured emergency core (in progress)
+
+- Added standalone `rescue-api` and `rescue-core` Gradle Java modules.
+- Added `EmergencyEnvelopeV1`, canonical binary codec, SHA-256 content hash, strict validation, bounded seen-message cache, and regression tests.
+- Added `docs/PROTOCOL_EMERGENCY_ENVELOPE_V1.md`.
+- The payload is not yet wired to Briar group/forum persistence or transport. It is not public-mesh capable and does not yet authenticate non-contact senders.
+
 ## Update policy
 
 1. Fetch upstream into `briar-upstream/master` before updating.

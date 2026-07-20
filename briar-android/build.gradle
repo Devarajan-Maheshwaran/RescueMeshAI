@@ -105,6 +105,8 @@ dependencies {
 	implementation project(':bramble-core')
 	implementation project(':bramble-android')
 	implementation project(':briar-core')
+	implementation project(':rescue-api')
+	implementation project(':rescue-core')
 
 	// newer versions of the libraries below require compileSdk 34
 	implementation 'androidx.fragment:fragment:1.6.2'

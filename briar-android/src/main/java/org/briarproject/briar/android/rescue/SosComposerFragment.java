@@ -14,7 +14,7 @@ import org.briarproject.briar.R;
 import org.briarproject.briar.android.fragment.BaseFragment;
 import org.briarproject.briar.android.rescue.emergency.EmergencyDraft;
 import org.briarproject.briar.android.rescue.emergency.EmergencyDraftStore;
-import org.briarproject.briar.android.rescue.emergency.EmergencyPriority;
+import org.rescuemesh.api.emergency.EmergencyPriority;
 
 import javax.annotation.Nullable;
 

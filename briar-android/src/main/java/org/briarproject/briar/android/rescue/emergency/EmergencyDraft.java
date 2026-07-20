@@ -1,5 +1,7 @@
 package org.briarproject.briar.android.rescue.emergency;
 
+import org.rescuemesh.api.emergency.EmergencyPriority;
+
 import java.util.UUID;
 
 import javax.annotation.Nullable;
