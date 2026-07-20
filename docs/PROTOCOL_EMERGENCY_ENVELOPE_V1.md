@@ -29,6 +29,17 @@ not yet an emergency-service integration.
 | hopCount / hopLimit | Relay bounds. |
 | contentHash | Integrity identity for canonical content. |
 
+## Authorised Briar forum bridge
+
+For the closed pilot, the binary envelope is encoded as Base64 with the text
+prefix `rescuemesh:e1:` and stored in a dedicated, already authorised Briar
+forum post. The bridge deliberately uses Briar's existing encrypted forum
+sharing path; it does not discover strangers, bypass group membership, or
+forward ordinary Briar data.
+
+A locally stored forum post becomes eligible for Briar synchronisation. The
+current adapter does not infer remote delivery from local persistence.
+
 ## Local lifecycle
 
 A validated envelope is tracked locally as `STORED`, `QUEUED`,

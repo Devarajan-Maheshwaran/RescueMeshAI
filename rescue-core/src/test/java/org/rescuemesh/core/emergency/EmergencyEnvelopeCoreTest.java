@@ -39,6 +39,18 @@ public class EmergencyEnvelopeCoreTest {
 	}
 
 	@Test
+	public void forumPayloadRoundTripUsesExplicitPrefix() throws Exception {
+		EmergencyEnvelope envelope = EmergencyEnvelopeFactory.create("origin-a",
+				EmergencyKind.SOS, EmergencyPriority.CRITICAL, "Help", null, null,
+				NOW, NOW + 60_000L, 3);
+		String payload = EmergencyForumPayloadCodec.encode(envelope);
+		assertTrue(EmergencyForumPayloadCodec.isEmergencyPayload(payload));
+		assertEquals(envelope.getMessageId(), EmergencyForumPayloadCodec.decode(payload)
+				.getMessageId());
+		assertFalse(EmergencyForumPayloadCodec.isEmergencyPayload("ordinary forum post"));
+	}
+
+	@Test
 	public void queueOrdersCriticalMessagesAndOnlyMarksActualPeerSync() {
 		EmergencyQueue queue = new EmergencyQueue(10);
 		EmergencyEnvelope normal = EmergencyEnvelopeFactory.create("origin-a",
