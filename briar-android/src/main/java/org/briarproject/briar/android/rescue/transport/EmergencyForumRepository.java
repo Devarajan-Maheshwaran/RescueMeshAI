@@ -40,6 +40,17 @@ public class EmergencyForumRepository {
 		this.forumManager = forumManager;
 	}
 
+	/** Looks up the configured forum without creating a new one. */
+	public void getConfigured(ConfiguredForumCallback callback) {
+		databaseExecutor.execute(() -> {
+			try {
+				callback.onConfiguredForum(getStoredForum());
+			} catch (DbException e) {
+				callback.onFailure(e);
+			}
+		});
+	}
+
 	public void getOrCreate(ForumCallback callback) {
 		databaseExecutor.execute(() -> {
 			try {
@@ -91,6 +102,11 @@ public class EmergencyForumRepository {
 
 	public interface ForumCallback {
 		void onForumReady(Forum forum, boolean created);
+		void onFailure(Exception exception);
+	}
+
+	public interface ConfiguredForumCallback {
+		void onConfiguredForum(@Nullable Forum forum);
 		void onFailure(Exception exception);
 	}
 }

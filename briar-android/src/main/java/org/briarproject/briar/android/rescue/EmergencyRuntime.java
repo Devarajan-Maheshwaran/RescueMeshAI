@@ -5,6 +5,7 @@ import android.content.Context;
 import org.briarproject.briar.android.AndroidComponent;
 import org.briarproject.briar.android.rescue.transport.BriarEmergencyForumReceiver;
 import org.briarproject.briar.android.rescue.transport.EmergencyForumEventListener;
+import org.briarproject.briar.android.rescue.transport.EmergencyForumRecovery;
 import org.briarproject.briar.android.rescue.transport.EmergencyForumRepository;
 import org.rescuemesh.api.emergency.EmergencyEnvelope;
 import org.rescuemesh.core.emergency.EmergencyQueue;
@@ -25,8 +26,9 @@ public final class EmergencyRuntime {
 		if (started) return;
 		EmergencyForumRepository forums = new EmergencyForumRepository(context,
 				component.databaseExecutor(), component.forumManager());
+		BriarEmergencyForumReceiver receiver = new BriarEmergencyForumReceiver(QUEUE);
 		EmergencyForumEventListener listener = new EmergencyForumEventListener(forums,
-				new BriarEmergencyForumReceiver(QUEUE), component.clock(),
+				receiver, component.clock(),
 				new EmergencyForumEventListener.InboundListener() {
 				@Override
 				public void onEmergencyAccepted(EmergencyEnvelope envelope) {
@@ -38,6 +40,23 @@ public final class EmergencyRuntime {
 				}
 				});
 		component.eventBus().addListener(listener);
+		forums.getConfigured(new EmergencyForumRepository.ConfiguredForumCallback() {
+			@Override
+			public void onConfiguredForum(
+					@javax.annotation.Nullable org.briarproject.briar.api.forum.Forum forum) {
+				if (forum == null) return;
+				try {
+					new EmergencyForumRecovery(component.forumManager(), receiver)
+							.recover(forum, component.clock().currentTimeMillis());
+				} catch (org.briarproject.bramble.api.db.DbException ignored) {
+					// The live event listener remains active; recovery can retry next start.
+				}
+			}
+			@Override
+			public void onFailure(Exception exception) {
+				// A configured forum is optional; do not prevent normal Briar startup.
+			}
+		});
 		started = true;
 	}
 }

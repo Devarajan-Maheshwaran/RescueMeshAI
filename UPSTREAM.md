@@ -31,6 +31,7 @@ The repository remote named `briar-upstream` is used only to fetch upstream chan
 - Added `docs/PROTOCOL_EMERGENCY_ENVELOPE_V1.md`.
 - Added an authorised Briar-forum bridge: canonical envelopes are prefixed/hex forum-post text, published through existing Briar forum storage, and safely decoded on receipt.
 - The bridge is not public-mesh capable and does not yet authenticate non-contact senders.
+- Added configured-forum recovery: on app-process startup, RescueMesh replays validated emergency payloads from its trusted Briar forum into the in-memory feed.
 
 ### Phase 3 — offline priority baseline (in progress)
 
