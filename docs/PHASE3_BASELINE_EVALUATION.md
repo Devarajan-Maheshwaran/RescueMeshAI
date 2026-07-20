@@ -30,6 +30,13 @@ same documented vocabulary as the baseline rules. It demonstrates that the
 implementation and evaluation script agree; it does **not** establish
 real-world generalisation.
 
+## In-app metric support
+
+`PriorityEvaluationMetrics` provides a Java confusion-matrix implementation for
+future offline evaluation tooling. It computes total examples, accuracy, and
+per-class precision, recall, and F1 for `CRITICAL`, `HIGH`, and `NORMAL`.
+It contains no corpus data and does not send evaluation content off-device.
+
 ## Required evidence before a TFLite decision
 
 1. A larger held-out, independently reviewed, de-identified evaluation set.
