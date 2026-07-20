@@ -32,10 +32,12 @@ real-world generalisation.
 
 ## In-app metric support
 
-`PriorityEvaluationMetrics` provides a Java confusion-matrix implementation for
-future offline evaluation tooling. It computes total examples, accuracy, and
-per-class precision, recall, and F1 for `CRITICAL`, `HIGH`, and `NORMAL`.
-It contains no corpus data and does not send evaluation content off-device.
+`PriorityEvaluationMetrics` provides a Java confusion-matrix implementation and
+`PriorityClassifierEvaluator` evaluates any `PriorityClassifier` against
+`LabeledPriorityExample` records. Together they compute total examples,
+accuracy, and per-class precision, recall, and F1 for `CRITICAL`, `HIGH`, and
+`NORMAL`. They contain no corpus data and do not send evaluation content
+off-device.
 
 ## Required evidence before a TFLite decision
 
