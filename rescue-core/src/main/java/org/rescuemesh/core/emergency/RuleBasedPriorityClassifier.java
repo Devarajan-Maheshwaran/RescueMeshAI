@@ -2,6 +2,7 @@ package org.rescuemesh.core.emergency;
 
 import org.rescuemesh.api.emergency.EmergencyPriority;
 import org.rescuemesh.api.emergency.PrioritySuggestion;
+import org.rescuemesh.api.emergency.PriorityClassifier;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +15,7 @@ import java.util.Locale;
  * an authoritative decision: sender-selected urgency remains the envelope's
  * priority and is never downgraded by this classifier.
  */
-public class RuleBasedPriorityClassifier {
+public class RuleBasedPriorityClassifier implements PriorityClassifier {
 
 	private static final List<String> CRITICAL = Collections.unmodifiableList(Arrays.asList(
 			"trapped", "unconscious", "not breathing", "severe bleeding",
@@ -23,6 +24,7 @@ public class RuleBasedPriorityClassifier {
 			"injured", "need help", "medical help", "flood rising", "missing",
 			"elderly", "child", "evacuate"));
 
+	@Override
 	public PrioritySuggestion classify(String text) {
 		String normalised = text == null ? "" : text.toLowerCase(Locale.ROOT);
 		List<String> critical = matched(normalised, CRITICAL);
@@ -37,6 +39,11 @@ public class RuleBasedPriorityClassifier {
 		}
 		return new PrioritySuggestion(EmergencyPriority.NORMAL, .40f,
 				Collections.<String>emptyList());
+	}
+
+	@Override
+	public String getModelVersion() {
+		return "rules-en-v1";
 	}
 
 	private List<String> matched(String text, List<String> indicators) {

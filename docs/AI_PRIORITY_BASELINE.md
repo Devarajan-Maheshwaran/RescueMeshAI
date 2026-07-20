@@ -20,6 +20,14 @@ keywords that caused the suggestion.
 4. Classification is local; message text is not sent to a cloud ML service.
 5. Keyword rules are English-only at this stage and are not medical diagnosis.
 
+## Reproducible seed evaluation
+
+The synthetic, de-identified regression corpus and standard-library evaluator
+are in `tools/data/synthetic_priority_eval_v1.csv` and
+`tools/evaluate_priority_baseline.py`. The measured result and its limitations
+are documented in [PHASE3_BASELINE_EVALUATION.md](PHASE3_BASELINE_EVALUATION.md).
+This seed corpus is intentionally not evidence of field accuracy.
+
 ## TFLite gate
 
 A TensorFlow Lite model may replace or complement this baseline only after the

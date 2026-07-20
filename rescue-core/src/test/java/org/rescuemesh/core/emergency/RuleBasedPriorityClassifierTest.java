@@ -11,6 +11,11 @@ public class RuleBasedPriorityClassifierTest {
 	private final RuleBasedPriorityClassifier classifier = new RuleBasedPriorityClassifier();
 
 	@Test
+	public void classifierHasStableAuditableVersion() {
+		assertEquals("rules-en-v1", classifier.getModelVersion());
+	}
+
+	@Test
 	public void trappedMessageIsCriticalAndExplainable() {
 		assertEquals(EmergencyPriority.CRITICAL,
 				classifier.classify("Two people trapped in a collapsed building").getPriority());

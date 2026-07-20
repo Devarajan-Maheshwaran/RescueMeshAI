@@ -1,0 +1,25 @@
+id,expected_priority,text,source,notes
+1,CRITICAL,"Two people trapped under a collapsed building",synthetic,seed-evaluation-only
+2,CRITICAL,"Unconscious woman near the bridge needs help",synthetic,seed-evaluation-only
+3,CRITICAL,"Severe bleeding after debris fell",synthetic,seed-evaluation-only
+4,CRITICAL,"Fire spreading through our apartment block",synthetic,seed-evaluation-only
+5,CRITICAL,"Child is drowning in flood water",synthetic,seed-evaluation-only
+6,CRITICAL,"We are buried and cannot move",synthetic,seed-evaluation-only
+7,HIGH,"Injured man needs medical help",synthetic,seed-evaluation-only
+8,HIGH,"Need help moving an elderly person",synthetic,seed-evaluation-only
+9,HIGH,"Flood rising near the school evacuation point",synthetic,seed-evaluation-only
+10,HIGH,"A child is missing after evacuation",synthetic,seed-evaluation-only
+11,HIGH,"Several people injured by broken glass",synthetic,seed-evaluation-only
+12,HIGH,"Please evacuate the lower street",synthetic,seed-evaluation-only
+13,NORMAL,"We are safe at the community hall",synthetic,seed-evaluation-only
+14,NORMAL,"Road is blocked near the market",synthetic,seed-evaluation-only
+15,NORMAL,"Water and blankets are available here",synthetic,seed-evaluation-only
+16,NORMAL,"Status update: five people reached the school",synthetic,seed-evaluation-only
+17,NORMAL,"No injuries in our building",synthetic,negation-case
+18,NORMAL,"No fire at this location now",synthetic,negation-case
+19,CRITICAL,"Trapped family needs immediate rescue",synthetic,seed-evaluation-only
+20,HIGH,"Need help for a child with an injured leg",synthetic,seed-evaluation-only
+21,NORMAL,"We have moved to a safe location",synthetic,seed-evaluation-only
+22,CRITICAL,"Person not breathing after the collapse",synthetic,seed-evaluation-only
+23,HIGH,"Medical help needed for two injured people",synthetic,seed-evaluation-only
+24,NORMAL,"Supplies request for drinking water",synthetic,seed-evaluation-only
