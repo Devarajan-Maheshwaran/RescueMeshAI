@@ -29,6 +29,17 @@ score         = battery + connectivity + mobility + link quality
 - Selection is bounded to top-K; it cannot create unlimited epidemic flooding.
 - This policy is simulation/research code until device-drill evidence exists.
 
+## Trace simulator
+
+`RelayPolicySimulator` compares policies against the same sequence of
+`RelaySimulationRound` records. A round contains pseudonymous candidates and
+the synthetic/de-identified set of candidates that can reach the destination.
+It records delivery outcome, delivery time, transmissions, and rounds
+processed. It stops at envelope expiry.
+
+This is deliberately a one-message deterministic comparison harness, not a
+claim that real radio reachability or human mobility has been modelled.
+
 ## Required evaluation
 
 Compare the same controlled trace/scenario using First-K and Battery-aware
