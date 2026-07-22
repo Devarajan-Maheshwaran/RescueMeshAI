@@ -68,6 +68,8 @@ public class RescueDashboardFragment extends BaseFragment {
 				provisionEmergencyForum());
 		view.findViewById(R.id.rescue_open_feed_button).setOnClickListener(v ->
 				showNextFragment(EmergencyFeedFragment.newInstance()));
+		view.findViewById(R.id.rescue_open_coordinator_button).setOnClickListener(v ->
+				showNextFragment(CoordinatorDashboardFragment.newInstance()));
 		renderLatestDraft(view);
 		renderRole(view);
 		renderRadioStatus(view);
@@ -115,6 +117,8 @@ public class RescueDashboardFragment extends BaseFragment {
 		RescueRole role = new RescueRoleStore(requireContext()).getRole();
 		roleView.setText(role == null ? getString(R.string.rescue_role_not_selected)
 				: getString(R.string.rescue_role_selected_format, role.name()));
+		View coordinator = view.findViewById(R.id.rescue_open_coordinator_button);
+		coordinator.setVisibility(role == RescueRole.COORDINATOR ? View.VISIBLE : View.GONE);
 	}
 
 	private void renderRadioStatus(View view) {

@@ -18,6 +18,13 @@
     <string name="rescue_create_update_button">Create status update</string>
     <string name="rescue_provision_forum_button">Prepare trusted emergency forum</string>
     <string name="rescue_open_feed_button">View emergency feed</string>
+    <string name="rescue_open_coordinator_button">Open coordinator overview</string>
+    <string name="rescue_coordinator_title">Coordinator overview</string>
+    <string name="rescue_coordinator_intro">This local view summarises validated RescueMesh messages on this device. It does not confirm external rescue dispatch.</string>
+    <string name="rescue_coordinator_critical_format">Critical messages: %1$d</string>
+    <string name="rescue_coordinator_high_format">High-priority messages: %1$d</string>
+    <string name="rescue_coordinator_ack_format">Acknowledged messages: %1$d</string>
+    <string name="rescue_coordinator_open_feed">Review prioritised emergency feed</string>
     <string name="rescue_feed_title">Emergency feed</string>
     <string name="rescue_feed_empty">No validated RescueMesh emergency messages are available in this app session.</string>
     <string name="rescue_acknowledge_button">Acknowledge highest-priority SOS</string>

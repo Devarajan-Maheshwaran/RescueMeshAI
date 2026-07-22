@@ -115,6 +115,15 @@
             android:layout_marginTop="12dp"
             android:text="@string/rescue_open_feed_button" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/rescue_open_coordinator_button"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            android:text="@string/rescue_open_coordinator_button" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
