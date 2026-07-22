@@ -31,6 +31,33 @@
             android:layout_marginTop="8dp"
             android:text="@string/rescue_choose_role_button" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rescue_status_card"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/rescue_queue_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/rescue_critical_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/rescue_critical"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/rescue_sos_button"
             style="@style/Widget.MaterialComponents.Button"

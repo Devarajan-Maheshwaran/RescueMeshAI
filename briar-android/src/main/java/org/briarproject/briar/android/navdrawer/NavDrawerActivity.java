@@ -37,6 +37,7 @@ import org.briarproject.briar.android.fragment.BaseFragment;
 import org.briarproject.briar.android.fragment.BaseFragment.BaseFragmentListener;
 import org.briarproject.briar.android.logout.SignOutFragment;
 import org.briarproject.briar.android.privategroup.list.GroupListFragment;
+import org.briarproject.briar.android.rescue.EmergencyFeedFragment;
 import org.briarproject.briar.android.rescue.RescueDashboardFragment;
 import org.briarproject.briar.android.settings.SettingsActivity;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
@@ -270,6 +271,8 @@ public class NavDrawerActivity extends BriarActivity implements
 		// TODO re-use fragments from the manager when possible (#606)
 		if (fragmentId == R.id.nav_btn_rescue_dashboard) {
 			startFragment(RescueDashboardFragment.newInstance());
+		} else if (fragmentId == R.id.nav_btn_rescue_feed) {
+			startFragment(EmergencyFeedFragment.newInstance());
 		} else if (fragmentId == R.id.nav_btn_contacts) {
 			startFragment(ContactListFragment.newInstance());
 		} else if (fragmentId == R.id.nav_btn_groups) {

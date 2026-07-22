@@ -36,7 +36,9 @@
     <string name="rescue_radio_on">on</string>
     <string name="rescue_radio_off">off or unavailable</string>
     <string name="rescue_radio_status_format">Bluetooth: %1$s · Wi-Fi: %2$s. This only reports local radio readiness; it does not show nearby peers.</string>
-    <string name="rescue_latest_status_title">Latest local emergency draft</string>
+    <string name="rescue_latest_status_title">Highest-priority message</string>
+    <string name="rescue_queue_count_format">Messages: %1$d</string>
+    <string name="rescue_critical_count_format">Critical: %1$d</string>
     <string name="rescue_no_local_sos">No local SOS has been created on this device.</string>
     <string name="rescue_latest_queue_format">%1$s — %2$s: %3$s</string>
     <string name="rescue_sos_title">Create SOS</string>
@@ -63,4 +65,5 @@
     <string name="rescue_message_too_long">Keep the message within %1$d characters.</string>
     <string name="rescue_victim_count_invalid">Enter a number from 0 to %1$d.</string>
     <string name="rescue_navigation_title">Emergency dashboard</string>
+    <string name="rescue_trusted_contacts_title">Trusted contacts</string>
 </resources>

@@ -29,6 +29,8 @@ import androidx.annotation.Nullable;
  */
 public class RescueDashboardFragment extends BaseFragment {
 
+	private boolean rolePrompted;
+
 	public static final String TAG = "org.briarproject.briar.RESCUE_DASHBOARD";
 
 	public static RescueDashboardFragment newInstance() {
@@ -80,6 +82,10 @@ public class RescueDashboardFragment extends BaseFragment {
 			renderRole(view);
 			renderRadioStatus(view);
 		}
+		if (!rolePrompted && new RescueRoleStore(requireContext()).getRole() == null) {
+			rolePrompted = true;
+			showNextFragment(RoleSelectionFragment.newInstance());
+		}
 	}
 
 	private void provisionEmergencyForum() {
@@ -125,7 +131,16 @@ public class RescueDashboardFragment extends BaseFragment {
 	private void renderLatestDraft(View view) {
 		TextView status = view.findViewById(R.id.rescue_latest_status);
 		java.util.List<EmergencyQueueItem> items = EmergencyRuntime.getQueue()
-				.getEligibleForTransfer(System.currentTimeMillis());
+				.getSnapshot(System.currentTimeMillis());
+		int critical = 0;
+		for (EmergencyQueueItem item : items) {
+			if (item.getEnvelope().getPriority()
+					== org.rescuemesh.api.emergency.EmergencyPriority.CRITICAL) critical++;
+		}
+		((TextView) view.findViewById(R.id.rescue_queue_count)).setText(
+				getString(R.string.rescue_queue_count_format, items.size()));
+		((TextView) view.findViewById(R.id.rescue_critical_count)).setText(
+				getString(R.string.rescue_critical_count_format, critical));
 		if (items.isEmpty()) {
 			status.setText(R.string.rescue_no_local_sos);
 			return;
