@@ -128,7 +128,7 @@ For upstream information, see [Briar](https://github.com/briar/briar) and its [p
 | **5. Experimental mesh** | Opt-in multi-hop emergency relay research, threat model, admission and abuse protections. |
 | **6. Evaluation** | Coordinator tools, accessibility, repeatable drills, findings and reproducible release. |
 
-Detailed acceptance criteria and requirements are in [SRS.md](SRS.md).
+Detailed acceptance criteria and requirements are in [SRS.md](SRS.md). The current implementation status, gates, and ordered remaining work are in [docs/NEXT_PHASES_PLAN.md](docs/NEXT_PHASES_PLAN.md).
 
 ---
 
