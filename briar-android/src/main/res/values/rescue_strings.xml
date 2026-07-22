@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="rescue_dashboard_title">RescueMesh</string>
-    <string name="rescue_dashboard_intro">Create an emergency draft. Secure persistent emergency storage and nearby synchronisation are added in the next implementation phase.</string>
+    <string name="rescue_dashboard_intro">Create an SOS or update. RescueMesh stores valid emergency messages locally and queues them for authorised nearby Briar synchronisation.</string>
     <string name="rescue_choose_role_button">Choose my role</string>
     <string name="rescue_role_not_selected">Role: not selected</string>
     <string name="rescue_role_selected_format">Role: %1$s</string>
@@ -50,7 +50,7 @@
     <string name="rescue_latest_queue_format">%1$s — %2$s: %3$s</string>
     <string name="rescue_sos_title">Create SOS</string>
     <string name="rescue_update_title">Create emergency update</string>
-    <string name="rescue_sos_disclaimer">This screen stores a local emergency draft in Phase 1. It does not yet confirm transmission, relay, rescue dispatch, or delivery.</string>
+    <string name="rescue_sos_disclaimer">A queued message is stored locally and shared only through authorised Briar synchronisation. It does not confirm relay, rescue dispatch, or delivery.</string>
     <string name="rescue_priority_label">Urgency selected by sender</string>
     <string name="rescue_priority_critical">CRITICAL — immediate danger</string>
     <string name="rescue_priority_high">HIGH — urgent assistance needed</string>

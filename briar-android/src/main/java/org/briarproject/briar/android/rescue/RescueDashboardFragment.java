@@ -20,12 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * Phase-1 RescueMesh home screen.
+ * RescueMesh home screen.
  *
  * <p>The dashboard intentionally reports only local, verified state. It does
- * not claim that a draft has reached a relay, a rescuer, or an emergency
- * service. Phase 2 replaces the draft card with the persisted emergency-feed
- * read model.</p>
+ * not claim that a message has reached a relay, a rescuer, or an emergency
+ * service unless the corresponding verified lifecycle state exists.</p>
  */
 public class RescueDashboardFragment extends BaseFragment {
 

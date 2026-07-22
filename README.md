@@ -191,7 +191,47 @@ Please do not submit real emergency victim information, private locations, crede
 
 ## Build instructions
 
-Build instructions will be added after the upstream import. The intended baseline is the upstream Briar toolchain (Java 17, Gradle wrapper, Android SDK/API level inherited from the pinned version). A build must be reproducible before functional modifications begin.
+### Prerequisites
+
+- Android Studio with **JDK 17** selected for Gradle.
+- Android SDK Platform **35** and Android SDK Build-Tools **35.0.0**.
+- Android device or emulator running Android 5.0/API 21 or later. Physical Android devices are required for Bluetooth/local-Wi-Fi testing.
+- Git with submodule support.
+
+### Clone and open
+
+```bash
+git clone --recurse-submodules https://github.com/Devarajan-Maheshwaran/RescueMeshAI.git
+cd RescueMeshAI
+```
+
+If the repository was cloned without submodules:
+
+```bash
+git submodule update --init --recursive
+```
+
+Open the repository root in Android Studio, allow Gradle sync to complete, then select the `briar-android` run configuration. The prototype application ID is:
+
+```text
+org.rescuemesh.ai
+```
+
+### Command-line build
+
+On macOS/Linux:
+
+```bash
+./gradlew :briar-android:assembleOfficialDebug
+```
+
+On Windows:
+
+```bat
+gradlew.bat :briar-android:assembleOfficialDebug
+```
+
+The first local build is the authoritative check for Android SDK, dependency, manifest, resource, and device compatibility. Run the two-device trusted-pilot drill only after the debug APK installs successfully.
 
 ---
 

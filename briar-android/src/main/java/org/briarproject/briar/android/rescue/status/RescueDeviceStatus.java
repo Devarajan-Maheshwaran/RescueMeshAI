@@ -8,8 +8,8 @@ import android.net.wifi.WifiManager;
  * Phase-1 device-radio snapshot.
  *
  * <p>This reports only local radio readiness. It does not infer peer count,
- * route availability, or message delivery. Phase 2 will consume verified
- * Briar plugin/synchronisation state for those indicators.</p>
+ * route availability, or message delivery. Those indicators must come from
+ * verified Briar plugin/synchronisation state before being displayed.</p>
  */
 public class RescueDeviceStatus {
 

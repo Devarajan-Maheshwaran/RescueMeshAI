@@ -30,7 +30,7 @@ android {
 		targetSdkVersion 35
 		versionCode 10519
 		versionName "1.5.19"
-		applicationId "org.briarproject.briar.android"
+		applicationId "org.rescuemesh.ai"
 		buildConfigField "String", "TorVersion", "\"$tor_version\""
 
 		vectorDrawables.useSupportLibrary = true
